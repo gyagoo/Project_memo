@@ -65,16 +65,16 @@
 					alert("이메일을 입력하세요");
 					return;
 				}
-				alert(password);
+				
 				$.ajax({
 				
 					type: "post",
 					url: "/user/sign_up",
 					data:{"loginId":loginId, "password":password, "passwordConfirm":passwordConfirm, "name":name, "email":email}, // 파라미터:변수
 					success: function(data) {
-						if(data == "success") {	// 성공
+						if(data.result == "success") {	// 성공
 							alert("가입을 환영합니다 *^^*");
-							location.href="/user/signin_view"	// 로그인 화면으로 이동
+							location.href="/user/signin_view";	// 로그인 화면으로 이동
 						} else {				// 실패
 							alert("회원가입 실패");
 						}
