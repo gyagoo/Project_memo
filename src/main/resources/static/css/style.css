@@ -12,6 +12,9 @@ header  {
 .content > .join-box {
 	width: 400px;
 }
+.content > .login-box {
+	width: 400px;
+}
 
 footer {
 	height: 50px
