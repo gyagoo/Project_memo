@@ -19,4 +19,3 @@ spring:
   url: jdbc:mysql://localhost:3306/memo?serverTimezone=UTC&characterEncoding=UTF-8
   username: root
   password: root
-  #password: ish1106*
