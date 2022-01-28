@@ -25,7 +25,7 @@
 				<label class="mr-2">제목: </label>
 				<input type="text" class="form-control col-11" id="titleInput">	
 				<textarea class="form-control mt-3" rows="5" id="contentInput"></textarea>	<%-- form-control을 잡으면 col은 자동으로 잡힘 --%>
-				<input type="file" class="mt-3">
+				<input type="file" class="mt-3" id="fileInput">
 				<div class="d-flex justify-content-between mt-3">
 					<a href="/post/list_view" class="btn btn-info">목록</a>	<%-- btn처럼 보이도록 만들어 주는 부트스트랩 --%>
 					<button type="button" class="btn btn-success" id="saveBtn">저장</button>
@@ -40,7 +40,7 @@
 		$(document).ready(function() {
 			$("#saveBtn").on("click", function() {
 				let title = $("#titleInput").val();
-				let content = $("#contentInput").val().trim; // textarea 사용시 깔끔하게 사용 사능(공백 제거)
+				let content = $("#contentInput").val().trim(); // textarea 사용시 깔끔하게 사용 사능(공백 제거)
 				
 				if(title == "") {
 					alert("제목을 입력하세요");
@@ -51,10 +51,21 @@
 					return;
 				}
 				
+				var formData = new ForData();
+				// 파라미터, 데이터 저장
+				formData.append("subject", title);
+				formData.append("content", content);
+				formData.append("file"), $("#fileInput")[0].files[0] // 첫 번째 파일, 1개만 업로드
+				
 				$.ajax({
 					type: "post",
 					url: "/post/create",
-					data: {"subject":title, "content":content},
+					data: formData,
+					
+					encType: "multipart/form-data",	// 파일 업로드 필수
+					processData: false,
+					contentType: false,
+					
 					success: function(data) {
 						if(data.result == "success") {
 							location.href="/post/list_view";
