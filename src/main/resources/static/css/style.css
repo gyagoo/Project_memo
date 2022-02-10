@@ -16,6 +16,10 @@ header  {
 	width: 400px;
 }
 
+.img-icon {
+	font-size: 25px;
+}
+
 footer {
 	height: 50px
 }

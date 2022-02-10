@@ -27,6 +27,11 @@
 					<input type="text" class="form-control col-11" id="titleInput" value="${post.subject }">					
 				</div>
 				<textarea class="form-control mt-3" rows="5" id="contentInput">${post.content }</textarea>	<%-- form-control을 잡으면 col은 자동으로 잡힘 --%>
+				
+				<div>
+					<img src="${post.imagePath }">	<%-- 이미지 --%>
+				</div>
+				
 				<div class="d-flex justify-content-between mt-3">
 					<div>
 						<a href="/post/list_view" class="btn btn-info">목록</a>	<%-- btn처럼 보이도록 만들어 주는 부트스트랩 --%>

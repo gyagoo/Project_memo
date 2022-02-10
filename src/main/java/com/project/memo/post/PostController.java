@@ -25,6 +25,7 @@ public class PostController {
 	// 로그인한 사용자의 글만 가져온다
 	@GetMapping("/list_view")
 	public String listView(HttpServletRequest request, Model model) {
+		
 		HttpSession session = request.getSession();
 		int userId = (Integer)session.getAttribute("userId");
 		

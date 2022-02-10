@@ -5,7 +5,8 @@
 <html>
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -25,7 +26,10 @@
 				<label class="mr-2">제목: </label>
 				<input type="text" class="form-control col-11" id="titleInput">	
 				<textarea class="form-control mt-3" rows="5" id="contentInput"></textarea>	<%-- form-control을 잡으면 col은 자동으로 잡힘 --%>
-				<input type="file" class="mt-3" id="fileInput">
+				<div class="d-flex ">
+					<span class="img-icon"><i class="bi bi-image" id="imgBtn"></i></span>
+					<input type="file" class="mt-3 d-none" id="fileInput">
+				</div>
 				<div class="d-flex justify-content-between mt-3">
 					<a href="/post/list_view" class="btn btn-info">목록</a>	<%-- btn처럼 보이도록 만들어 주는 부트스트랩 --%>
 					<button type="button" class="btn btn-success" id="saveBtn">저장</button>
@@ -38,6 +42,13 @@
 	
 	<script>
 		$(document).ready(function() {
+			
+			$("#imgBtn").on("click", function() {
+				// fileInput 클릭 효과
+				$("#fileInput").click();
+			});
+			
+			
 			$("#saveBtn").on("click", function() {
 				let title = $("#titleInput").val();
 				let content = $("#contentInput").val().trim(); // textarea 사용시 깔끔하게 사용 사능(공백 제거)
@@ -51,11 +62,17 @@
 					return;
 				}
 				
-				var formData = new ForData();
+				// 파일 유효성 검사
+				if($("#fileInput")[0].files.length == 0) {
+					alert("파일을 선택해주세요");
+					return;
+				}
+				
+				var formData = new FormData();
 				// 파라미터, 데이터 저장
 				formData.append("subject", title);
 				formData.append("content", content);
-				formData.append("file"), $("#fileInput")[0].files[0] // 첫 번째 파일, 1개만 업로드
+				formData.append("file", $("#fileInput")[0].files[0]); // 첫 번째 파일, 1개만 업로드
 				
 				$.ajax({
 					type: "post",
@@ -68,7 +85,7 @@
 					
 					success: function(data) {
 						if(data.result == "success") {
-							location.href="/post/list_view";
+							location.reload();
 						} else {
 							alert("글쓰기 실패");
 						}

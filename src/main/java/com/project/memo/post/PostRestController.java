@@ -27,7 +27,7 @@ public class PostRestController {
 	public Map<String, Object> create(
 			@RequestParam("subject") String subject,
 			@RequestParam("content") String content,
-			@RequestParam("file") MultipartFile file,			// 파일 전달 받기 -> 파일을 저장하고 관리하는 class를 따로 만들어 관리
+			@RequestParam(value="file", required = false) MultipartFile file,			// 파일 전달 받기 -> 파일을 저장하고 관리하는 class를 따로 만들어 관리
 			HttpServletRequest request) {
 
 		/*
